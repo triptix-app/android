@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.Refresh
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -64,6 +65,7 @@ fun Greeting(name: String) {
         mutableStateOf(TextFieldValue("Universitatea Româno-Americană"))
     }
 
+    }
     Surface(
         tonalElevation = 5.dp,
         modifier = Modifier
@@ -113,40 +115,54 @@ fun Greeting(name: String) {
                                             tint = colorResource(id = R.color.blue)
                                         )
                                     }
-                                    Column(modifier = Modifier.padding(24.dp, 0.dp)) {
-                                        TextField(
-                                            modifier = Modifier.padding(0.dp),
-                                            shape = TextFieldDefaults.outlinedShape,
-                                            value = fromTextState,
-                                            onValueChange = { fromTextState = it },
-                                            label = { Text("From") },
-                                            colors = TextFieldDefaults.textFieldColors(
-                                                containerColor = MaterialTheme.colorScheme.surface,
-                                                unfocusedLabelColor = MaterialTheme.colorScheme.primary,
-                                                unfocusedIndicatorColor = MaterialTheme.colorScheme.surface,
-                                                focusedIndicatorColor = MaterialTheme.colorScheme.surface
-                                            ),
-                                            singleLine = true
-                                        )
-                                        Divider(
-                                            color = MaterialTheme.colorScheme.outlineVariant,
+                                    Box {
+                                        Column(modifier = Modifier.padding(24.dp, 0.dp)) {
+                                            TextField(
+                                                modifier = Modifier.padding(0.dp),
+                                                shape = TextFieldDefaults.outlinedShape,
+                                                value = fromTextState,
+                                                onValueChange = { fromTextState = it },
+                                                label = { Text("From") },
+                                                colors = TextFieldDefaults.textFieldColors(
+                                                    containerColor = MaterialTheme.colorScheme.surface,
+                                                    unfocusedLabelColor = MaterialTheme.colorScheme.primary,
+                                                    unfocusedIndicatorColor = MaterialTheme.colorScheme.surface,
+                                                    focusedIndicatorColor = MaterialTheme.colorScheme.surface
+                                                ),
+                                                singleLine = true
+                                            )
+                                            Divider(
+                                                color = MaterialTheme.colorScheme.outlineVariant,
+                                                modifier = Modifier
+                                                    .height(1.dp)
+                                                    .fillMaxWidth()
+                                            )
+                                            TextField(
+                                                modifier = Modifier.padding(0.dp),
+                                                shape = TextFieldDefaults.outlinedShape,
+                                                value = toTextState,
+                                                onValueChange = { toTextState = it },
+                                                label = { Text("To") },
+                                                colors = TextFieldDefaults.textFieldColors(
+                                                    containerColor = MaterialTheme.colorScheme.surface,
+                                                    unfocusedLabelColor = MaterialTheme.colorScheme.primary,
+                                                    unfocusedIndicatorColor = MaterialTheme.colorScheme.surface,
+                                                    focusedIndicatorColor = MaterialTheme.colorScheme.surface
+                                                ),
+                                                singleLine = true
+                                            )
+                                        }
+                                        FloatingActionButton(
                                             modifier = Modifier
-                                                .height(1.dp)
-                                                .fillMaxWidth()
-                                        )
-                                        TextField(
-                                            modifier = Modifier.padding(0.dp),
-                                            shape = TextFieldDefaults.outlinedShape,
-                                            value = toTextState,
-                                            onValueChange = { toTextState = it },
-                                            label = { Text("To") },
-                                            colors = TextFieldDefaults.textFieldColors(
-                                                containerColor = MaterialTheme.colorScheme.surface,
-                                                unfocusedLabelColor = MaterialTheme.colorScheme.primary,
-                                                unfocusedIndicatorColor = MaterialTheme.colorScheme.surface,
-                                                focusedIndicatorColor = MaterialTheme.colorScheme.surface
-                                            ),
-                                            singleLine = true
+                                                .align(Alignment.CenterEnd)
+                                                .size(32.dp),
+                                            onClick = { },
+                                            content = {
+                                                Icon(
+                                                    imageVector = Icons.Outlined.Refresh,
+                                                    contentDescription = "Swap start and destination"
+                                                )
+                                            }
                                         )
                                     }
                                 }
