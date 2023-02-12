@@ -26,9 +26,11 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 
@@ -57,7 +59,6 @@ fun Greeting(name: String) {
     val items = listOf("Search", "My Tickets", "Account")
     val icons = listOf(Icons.Filled.Search, Icons.Filled.List, Icons.Filled.AccountBox)
 
-
     var fromTextState by rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(TextFieldValue("Dacia Service, Timișoara"))
     }
@@ -65,7 +66,6 @@ fun Greeting(name: String) {
         mutableStateOf(TextFieldValue("Universitatea Româno-Americană"))
     }
 
-    }
     Surface(
         tonalElevation = 5.dp,
         modifier = Modifier
@@ -88,12 +88,13 @@ fun Greeting(name: String) {
                             content = {
                                 Row(
                                     modifier = Modifier
-                                        .padding(24.dp, 18.dp)
+                                        .padding(horizontal = 18.dp, vertical = 14.dp)
                                         .height(intrinsicSize = IntrinsicSize.Max)
+                                        .fillMaxWidth()
                                 ) {
                                     Column(
                                         horizontalAlignment = Alignment.CenterHorizontally,
-                                        modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 10.dp)
+                                        modifier = Modifier.padding(bottom = 10.dp)
                                     ) {
                                         Spacer(modifier = Modifier.weight(1f))
                                         Icon(
@@ -107,6 +108,7 @@ fun Greeting(name: String) {
                                             modifier = Modifier
                                                 .height(30.dp)
                                                 .width(1.dp)
+                                                .padding(vertical = 1.dp)
                                         )
                                         Icon(
                                             modifier = Modifier.size(24.dp),
@@ -115,10 +117,9 @@ fun Greeting(name: String) {
                                             tint = colorResource(id = R.color.blue)
                                         )
                                     }
-                                    Box {
-                                        Column(modifier = Modifier.padding(24.dp, 0.dp)) {
+                                    Box(modifier = Modifier.fillMaxWidth()) {
+                                        Column(modifier = Modifier.padding(start = 8.dp)) {
                                             TextField(
-                                                modifier = Modifier.padding(0.dp),
                                                 shape = TextFieldDefaults.outlinedShape,
                                                 value = fromTextState,
                                                 onValueChange = { fromTextState = it },
@@ -135,10 +136,9 @@ fun Greeting(name: String) {
                                                 color = MaterialTheme.colorScheme.outlineVariant,
                                                 modifier = Modifier
                                                     .height(1.dp)
-                                                    .fillMaxWidth()
+                                                    .fillMaxWidth(0.85F)
                                             )
                                             TextField(
-                                                modifier = Modifier.padding(0.dp),
                                                 shape = TextFieldDefaults.outlinedShape,
                                                 value = toTextState,
                                                 onValueChange = { toTextState = it },
@@ -153,13 +153,16 @@ fun Greeting(name: String) {
                                             )
                                         }
                                         FloatingActionButton(
+                                            shape = FloatingActionButtonDefaults.smallShape,
+                                            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                                            containerColor = MaterialTheme.colorScheme.secondaryContainer,
                                             modifier = Modifier
                                                 .align(Alignment.CenterEnd)
                                                 .size(32.dp),
                                             onClick = { },
                                             content = {
                                                 Icon(
-                                                    imageVector = Icons.Outlined.Refresh,
+                                                    imageVector = ImageVector.vectorResource(id = R.drawable.baseline_swap_vert_24),
                                                     contentDescription = "Swap start and destination"
                                                 )
                                             }
