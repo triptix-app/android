@@ -1,4 +1,5 @@
 <resources>
-    <string name="app_name">motis</string>
+    <string name="app_name">MOTIS</string>
     <string name="from_icon">From Icon</string>
+    <string name="to_icon">To Icon</string>
 </resources>
