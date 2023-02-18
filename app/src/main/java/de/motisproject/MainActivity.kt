@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -44,7 +43,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Search("Android")
+                    Search()
                 }
             }
         }
@@ -95,7 +94,7 @@ fun SearchInput() {
                     Icon(
                         modifier = Modifier.size(24.dp),
                         painter = painterResource(id = R.drawable.marker),
-                        contentDescription = stringResource(id = R.string.from_icon),
+                        contentDescription = stringResource(id = R.string.to_icon),
                         tint = colorResource(id = R.color.blue)
                     )
                 }
@@ -167,7 +166,7 @@ fun ConnectionSummary() {
             modifier = Modifier.padding(horizontal = 18.dp, vertical = 14.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Column() {
+            Column {
                 Text("15 hr 58 min")
                 Text("4 transfers")
                 Text(
@@ -236,7 +235,7 @@ fun ConnectionSummary() {
 @Composable
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
-fun Search(name: String) {
+fun Search() {
     var selectedItem by remember { mutableStateOf(0) }
     val items = listOf("Search", "My Tickets", "Account")
     val icons = listOf(Icons.Filled.Search, Icons.Filled.List, Icons.Filled.AccountBox)
@@ -310,6 +309,6 @@ fun Search(name: String) {
 @Composable
 fun DefaultPreview() {
     AppTheme {
-        Search("Android")
+        Search()
     }
 }
