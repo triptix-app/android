@@ -1,4 +1,4 @@
-package de.motisproject
+package de.triptix
 
 import org.junit.Test
 

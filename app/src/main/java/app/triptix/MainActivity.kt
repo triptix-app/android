@@ -1,5 +1,6 @@
-package de.motisproject
+package de.triptix
 
+import ConnectionSummary
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -32,6 +33,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.TextFieldValue
+import app.triptix.R
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -152,84 +154,6 @@ fun SearchInput() {
             }
         }
     )
-}
-
-@Composable
-fun ConnectionSummary() {
-    Surface(
-        tonalElevation = 5.dp,
-        modifier = Modifier
-            .clip(RoundedCornerShape(8.dp))
-            .fillMaxWidth()
-    ) {
-        Row(
-            modifier = Modifier.padding(horizontal = 18.dp, vertical = 14.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column {
-                Text("15 hr 58 min")
-                Text("4 transfers")
-                Text(
-                    text = "16:00 (Thursday) - 7:58 (Friday)",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                Row(
-                    modifier = Modifier.padding(top = 6.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        imageVector = ImageVector.vectorResource(id = R.drawable.baseline_directions_bus_24),
-                        contentDescription = "Bus",
-                        modifier = Modifier.size(20.dp),
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                    Text(
-                        "RB 68",
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-
-                    Icon(
-                        imageVector = Icons.Filled.KeyboardArrowRight,
-                        contentDescription = "Arrow",
-                        modifier = Modifier.size(20.dp),
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-
-                    Icon(
-                        imageVector = ImageVector.vectorResource(id = R.drawable.baseline_train_24),
-                        contentDescription = "Bus",
-                        modifier = Modifier.size(20.dp),
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                    Text(
-                        "ICE 1234",
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-
-                    Icon(
-                        imageVector = Icons.Filled.KeyboardArrowRight,
-                        contentDescription = "Arrow",
-                        modifier = Modifier.size(20.dp),
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-
-                    Icon(
-                        imageVector = ImageVector.vectorResource(id = R.drawable.baseline_local_taxi_24),
-                        contentDescription = "Taxi",
-                        modifier = Modifier.size(20.dp),
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-            }
-            Spacer(modifier = Modifier.weight(1.0F))
-            TextButton(onClick = { /*TODO*/ }) {
-                Text("Buy ticket\n55.30 Lei")
-            }
-        }
-    }
 }
 
 @Composable

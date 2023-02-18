@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'de.motisproject'
+    namespace 'app.triptix'
     compileSdk 33
 
     defaultConfig {
-        applicationId "de.motisproject"
+        applicationId "app.triptix"
         minSdk 27
         targetSdk 33
         versionCode 1
