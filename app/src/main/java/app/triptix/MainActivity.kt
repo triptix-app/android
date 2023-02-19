@@ -5,7 +5,9 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -28,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -156,6 +159,101 @@ fun SearchInput() {
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SearchBar() {
+    var text by rememberSaveable { mutableStateOf("") }
+    var active by rememberSaveable { mutableStateOf(false) }
+    val focusManager = LocalFocusManager.current
+
+    val Transparent = Color.Black.copy(alpha = 0.0F)
+
+    fun closeSearchBar() {
+        focusManager.clearFocus()
+        active = false
+    }
+
+    SearchBar(
+        modifier = Modifier.padding(top = 8.dp),
+        query = text,
+        onQueryChange = { text = it },
+        onSearch = { closeSearchBar() },
+        active = true,
+        onActiveChange = {
+            active = it
+            if (!active) focusManager.clearFocus()
+        },
+        leadingIcon = {
+            Icon(
+                Icons.Filled.ArrowBack,
+                contentDescription = "Go back to search",
+                Modifier.size(InputChipDefaults.AvatarSize)
+            )
+        },
+        trailingIcon = {
+            Icon(
+                Icons.Filled.Clear,
+                contentDescription = "Go back to search",
+                Modifier.size(InputChipDefaults.AvatarSize)
+            )
+        },
+        placeholder = { Text("Darmstadt Hochschul") },
+        colors = SearchBarDefaults.colors(
+            inputFieldColors = TextFieldDefaults.textFieldColors(
+                containerColor = Color.Black.copy(alpha = 0.0F),
+                unfocusedLabelColor = MaterialTheme.colorScheme.primary,
+                unfocusedIndicatorColor = Color.Black.copy(alpha = 0.0F),
+                focusedIndicatorColor = Color.Black.copy(alpha = 0.0F)
+            )
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            val list = listOf(
+                "Hochschule",
+                "Hochschule West",
+                "Hochschulstadion",
+                "Hochhaus der Hochschule",
+                "Hochschulstraße"
+            )
+            val places = listOf(
+                "Darmstadt",
+                "Darmstadt",
+                "Darmstadt",
+                "Darmstadt",
+                "Darmstadt"
+            )
+            val types = listOf(0, 0, 0, 1, 1)
+            val icons = listOf(
+                R.drawable.baseline_train_24,
+                R.drawable.marker
+            )
+
+            repeat(list.size * 1) {
+                val idx = it % list.size
+                ListItem(
+                    headlineText = { Text(list[idx]) },
+                    supportingText = { Text(places[idx]) },
+                    leadingContent = {
+                        Icon(
+                            imageVector = ImageVector.vectorResource(id = icons[types[idx]]),
+                            contentDescription = if (types[idx] == 0) "Public Transport Stop" else "Street address",
+                            modifier = Modifier.size(20.dp),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    })
+                Divider()
+            }
+        }
+    }
+}
+
+
 @Composable
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -163,55 +261,60 @@ fun Search() {
     var selectedItem by remember { mutableStateOf(0) }
     val items = listOf("Search", "My Tickets", "Account")
     val icons = listOf(Icons.Filled.Search, Icons.Filled.List, Icons.Filled.AccountBox)
+    val search = false
     Scaffold(
         content = {
-            Column(
-                modifier = Modifier
-                    .padding(
-                        start = 14.dp,
-                        bottom = it.calculateBottomPadding(),
-                        top = 14.dp,
-                        end = 14.dp
-                    ),
-                verticalArrangement = Arrangement.spacedBy(7.dp)
-            ) {
-                SearchInput()
-                Row(horizontalArrangement = Arrangement.spacedBy(14.dp)) {
-                    InputChip(
-                        selected = false,
-                        onClick = { /* TODO */ },
-                        label = { Text("Depart at Thu, Jan 12, 14:21") },
-                        trailingIcon = {
-                            Icon(
-                                Icons.Filled.ArrowDropDown,
-                                contentDescription = "Click to change date and time settings",
-                                Modifier.size(InputChipDefaults.AvatarSize)
-                            )
-                        }
-                    )
-                    InputChip(
-                        selected = false,
-                        onClick = { /* TODO */ },
-                        label = { Text("All modes") },
-                        trailingIcon = {
-                            Icon(
-                                Icons.Filled.ArrowDropDown,
-                                contentDescription = "Click to change mode of transportation",
-                                Modifier.size(InputChipDefaults.AvatarSize)
-                            )
-                        }
-                    )
-                }
+            if (search) {
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(14.dp),
-                    modifier = Modifier.verticalScroll(rememberScrollState())
+                    modifier = Modifier
+                        .padding(
+                            start = 14.dp,
+                            bottom = it.calculateBottomPadding(),
+                            top = 14.dp,
+                            end = 14.dp
+                        ),
+                    verticalArrangement = Arrangement.spacedBy(7.dp)
                 ) {
-                    ConnectionSummary()
-                    ConnectionSummary()
-                    ConnectionSummary()
-                    ConnectionSummary()
-                    ConnectionSummary()
+                    SearchInput()
+                    Row(horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+                        InputChip(
+                            selected = false,
+                            onClick = { /* TODO */ },
+                            label = { Text("Depart at Thu, Jan 12, 14:21") },
+                            trailingIcon = {
+                                Icon(
+                                    Icons.Filled.ArrowDropDown,
+                                    contentDescription = "Click to change date and time settings",
+                                    Modifier.size(InputChipDefaults.AvatarSize)
+                                )
+                            }
+                        )
+                        InputChip(
+                            selected = false,
+                            onClick = { /* TODO */ },
+                            label = { Text("All modes") },
+                            trailingIcon = {
+                                Icon(
+                                    Icons.Filled.ArrowDropDown,
+                                    contentDescription = "Click to change mode of transportation",
+                                    Modifier.size(InputChipDefaults.AvatarSize)
+                                )
+                            }
+                        )
+                    }
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(14.dp),
+                        modifier = Modifier.verticalScroll(rememberScrollState())
+                    ) {
+                        ConnectionSummary()
+                        ConnectionSummary()
+                        ConnectionSummary()
+                        ConnectionSummary()
+                        ConnectionSummary()
+                    }
                 }
+            } else {
+                SearchBar()
             }
         },
         bottomBar = {
